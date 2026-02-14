@@ -53,7 +53,7 @@ mkdir -p "$BUILD_DIR"
 
 if [ ! -d "$PIGEN_DIR" ]; then
     echo "[1/5] Cloning pi-gen..."
-    git clone --depth 1 https://github.com/RPi-Distro/pi-gen.git "$PIGEN_DIR"
+    git clone --depth 1 --branch arm64 https://github.com/RPi-Distro/pi-gen.git "$PIGEN_DIR"
 else
     echo "[1/5] pi-gen already present."
 fi
@@ -64,7 +64,7 @@ echo "[2/5] Writing pi-gen configuration..."
 
 cat > "$PIGEN_DIR/config" << 'PICONFIG'
 IMG_NAME="alixos"
-RELEASE="bookworm"
+RELEASE="trixie"
 TARGET_HOSTNAME="alixos"
 FIRST_USER_NAME="alix"
 FIRST_USER_PASS="alix"
@@ -77,33 +77,31 @@ TIMEZONE_DEFAULT="Europe/Berlin"
 # Build 64-bit image for CM4
 ARCH=arm64
 
-# We need stages 0-2 (Lite) plus our custom stage
-STAGE_LIST="stage0 stage1 stage2 stage-alixos"
+# We need stages 0-2 (Lite) plus stage3 (AlixOS)
+STAGE_LIST="stage0 stage1 stage2 stage3"
 PICONFIG
 
-# ---- Step 3: Copy AlixOS custom stage ----
+# ---- Step 3: Replace stage3 with AlixOS custom stage ----
 
 echo "[3/5] Setting up AlixOS custom stage..."
 
-# Remove old stage if exists
-rm -rf "$PIGEN_DIR/stage-alixos"
-
-# Copy the stage definition
-cp -r "$SCRIPT_DIR/stage-alixos" "$PIGEN_DIR/stage-alixos"
+# Replace pi-gen's stage3 with our AlixOS stage
+rm -rf "$PIGEN_DIR/stage3"
+cp -r "$SCRIPT_DIR/stage-alixos" "$PIGEN_DIR/stage3"
 
 # Copy AlixOS project files into the stage
-mkdir -p "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix"
-cp -r "$PROJECT_DIR/kernel"  "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
-cp -r "$PROJECT_DIR/fpga"    "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
-cp -r "$PROJECT_DIR/system"  "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
-cp -r "$PROJECT_DIR/distro"  "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
-cp -r "$PROJECT_DIR/tools"   "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
-cp -r "$PROJECT_DIR/scripts" "$PIGEN_DIR/stage-alixos/01-install-alixos/files/alix/"
+mkdir -p "$PIGEN_DIR/stage3/01-install-alixos/files/alix"
+cp -r "$PROJECT_DIR/kernel"  "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
+cp -r "$PROJECT_DIR/fpga"    "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
+cp -r "$PROJECT_DIR/system"  "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
+cp -r "$PROJECT_DIR/distro"  "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
+cp -r "$PROJECT_DIR/tools"   "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
+cp -r "$PROJECT_DIR/scripts" "$PIGEN_DIR/stage3/01-install-alixos/files/alix/"
 
 # ---- Step 4: Skip unwanted stages ----
 
-# Skip stages 3-5
-for stage in stage3 stage4 stage5; do
+# Skip stages 4-5
+for stage in stage4 stage5; do
     if [ -d "$PIGEN_DIR/$stage" ]; then
         touch "$PIGEN_DIR/$stage/SKIP"
         rm -f "$PIGEN_DIR/$stage/SKIP_IMAGES" 2>/dev/null
@@ -115,8 +113,8 @@ for stage in stage0 stage1 stage2; do
     touch "$PIGEN_DIR/$stage/SKIP_IMAGES"
 done
 
-# DO export the final AlixOS stage image
-rm -f "$PIGEN_DIR/stage-alixos/SKIP_IMAGES" 2>/dev/null
+# DO export the final stage3 (AlixOS) image
+rm -f "$PIGEN_DIR/stage3/SKIP_IMAGES" 2>/dev/null
 
 # ---- Step 5: Build ----
 
