@@ -1,0 +1,13 @@
+[Unit]
+Description=AlixOS FPGA Bitstream Loader
+DefaultDependencies=no
+Before=sysinit.target
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/alix-fpga-load /usr/local/share/alix/bitstream.bin
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target

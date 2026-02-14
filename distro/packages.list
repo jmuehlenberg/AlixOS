@@ -1,0 +1,38 @@
+# AlixOS required packages
+
+# Desktop environment
+xserver-xorg
+xserver-xorg-video-fbdev
+xinit
+lxde-core
+lightdm
+lightdm-gtk-greeter
+
+# Build tools (for on-device kernel module compilation)
+build-essential
+linux-headers-$(uname -r)
+git
+
+# Input utilities
+evtest
+xinput
+jstest-gtk
+
+# Web browser
+chromium-browser
+
+# Development
+vim
+htop
+tree
+
+# Bluetooth
+bluez
+blueman
+
+# WiFi & Networking
+network-manager
+network-manager-gnome
+wpasupplicant
+firmware-brcm80211
+ssh

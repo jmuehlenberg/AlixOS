@@ -1,0 +1,40 @@
+# Build artifacts
+*.o
+*.ko
+*.ko.cmd
+*.mod
+*.mod.c
+*.mod.cmd
+*.order
+*.symvers
+.tmp_versions/
+modules.order
+Module.symvers
+.cache.mk
+
+# Compiled binaries
+alix-fpga-load
+floppy
+
+# FPGA bitstream (user-provided, not part of source)
+fpga/bitstream.bin
+
+# pi-gen build output
+image-build/pi-gen/
+image-build/deploy/
+image-build/work/
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.kate-swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/

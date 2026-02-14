@@ -1,0 +1,11 @@
+# AlixOS input device udev rules
+# Create stable symlinks for Amiga input devices
+
+SUBSYSTEM=="input", ATTRS{name}=="AlixOS Amiga Keyboard", SYMLINK+="input/alix-kbd"
+SUBSYSTEM=="input", ATTRS{name}=="AlixOS Amiga Mouse", SYMLINK+="input/alix-mouse"
+SUBSYSTEM=="input", ATTRS{name}=="AlixOS Amiga Joystick", SYMLINK+="input/alix-joy"
+
+# Serial and parallel port symlinks
+KERNEL=="ttyAMIGA0", SYMLINK+="alix-serial"
+SUBSYSTEM=="misc", KERNEL=="alix-parport", SYMLINK+="alix-parport"
+SUBSYSTEM=="misc", KERNEL=="alix-floppy", SYMLINK+="alix-floppy"

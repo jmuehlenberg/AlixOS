@@ -1,0 +1,20 @@
+[Unit]
+Description=AlixOS Input Drivers
+After=alix-fpga-load.service
+Requires=alix-fpga-load.service
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/modprobe pistorm_bus
+ExecStart=/sbin/modprobe alix_kbd
+ExecStart=/sbin/modprobe alix_mouse
+ExecStart=/sbin/modprobe alix_joy
+ExecStart=/sbin/modprobe alix_serial
+ExecStart=/sbin/modprobe alix_parallel
+ExecStart=/sbin/modprobe alix_led
+ExecStart=/sbin/modprobe alix_rtc
+ExecStart=/sbin/modprobe alix_floppy
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

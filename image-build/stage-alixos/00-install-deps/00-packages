@@ -1,0 +1,45 @@
+# AlixOS Desktop Environment
+xserver-xorg
+xserver-xorg-video-fbdev
+xinit
+lxde-core
+lightdm
+lightdm-gtk-greeter
+lxappearance
+
+# Web Browser
+chromium-browser
+
+# Bluetooth
+bluez
+blueman
+pi-bluetooth
+
+# WiFi & Networking
+network-manager
+network-manager-gnome
+wpasupplicant
+
+# Audio (HDMI)
+pulseaudio
+pavucontrol
+
+# Build tools (for kernel module compilation on-device)
+build-essential
+git
+
+# Input testing utilities
+evtest
+xinput
+jstest-gtk
+
+# System utilities
+vim
+htop
+tree
+curl
+wget
+unzip
+
+# File manager (comes with LXDE but ensure it's there)
+pcmanfm

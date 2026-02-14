@@ -1,0 +1,20 @@
+# AlixOS Boot Configuration for PiStorm32-lite CM4
+# Place in /boot/config.txt on the Raspberry Pi
+
+# Enable HDMI output (primary display)
+hdmi_force_hotplug=1
+hdmi_group=1
+hdmi_mode=16
+
+# Audio through HDMI
+dtparam=audio=on
+hdmi_drive=2
+
+# WiFi and Bluetooth enabled (CM4 onboard)
+# dtoverlay=disable-bt  # Uncomment to disable Bluetooth if not needed
+
+# GPU memory allocation
+gpu_mem=128
+
+# Enable UART for debug console (optional, does not affect BT)
+enable_uart=1
