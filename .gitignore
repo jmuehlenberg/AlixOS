@@ -23,6 +23,9 @@ fpga/bitstream.bin
 image-build/pi-gen/
 image-build/deploy/
 image-build/work/
+image-build/build.log
+image-build/stage-alixos/build.log
+*.img
 
 # Editor files
 *.swp

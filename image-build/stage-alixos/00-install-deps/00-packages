@@ -8,7 +8,7 @@ lightdm-gtk-greeter
 lxappearance
 
 # Web Browser
-chromium-browser
+chromium
 
 # Bluetooth
 bluez

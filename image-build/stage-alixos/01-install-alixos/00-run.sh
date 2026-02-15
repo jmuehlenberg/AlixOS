@@ -35,6 +35,12 @@ install -d "${ROOTFS_DIR}/etc/X11/xorg.conf.d"
 install -m 644 files/alix/system/xorg/10-alix-input.conf \
     "${ROOTFS_DIR}/etc/X11/xorg.conf.d/"
 
+# Disable apt-listchanges (causes hours of timeouts during image export)
+on_chroot << 'CHEOF'
+apt-get -y remove apt-listchanges 2>/dev/null || true
+rm -f /etc/apt/listchanges.conf
+CHEOF
+
 # Build kernel modules inside chroot
 on_chroot << 'CHEOF'
 echo "AlixOS: Building kernel modules..."
