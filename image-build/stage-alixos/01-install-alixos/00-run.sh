@@ -68,6 +68,15 @@ if [ -f /opt/alix/fpga/alix-fpga-load ]; then
     install -m 755 /opt/alix/fpga/alix-fpga-load /usr/local/bin/
 fi
 
+# Install FPGA bitstream if provided
+if [ -f /opt/alix/fpga/bitstream.bin ]; then
+    echo "AlixOS: Installing FPGA bitstream..."
+    install -m 644 /opt/alix/fpga/bitstream.bin /usr/local/share/alix/bitstream.bin
+else
+    echo "AlixOS: No FPGA bitstream found at fpga/bitstream.bin — skipping."
+    echo "        Copy it later to /usr/local/share/alix/bitstream.bin"
+fi
+
 # Enable systemd services
 systemctl enable alix-fpga-load.service || true
 systemctl enable alix-input.service || true

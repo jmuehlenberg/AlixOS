@@ -141,13 +141,32 @@ jstest /dev/input/alix-joy
 
 ## FPGA Bitstream
 
-The PiStorm32-lite FPGA bitstream file is **not included** in this repository. You need to obtain it from the [PiStorm project](https://github.com/captain-amygdala/pistorm) and place it at:
+The PiStorm32-lite FPGA bitstream file is **not included** in this repository. The bitstream is hardware-specific and differs between PiStorm32-lite board revisions — using the wrong bitstream can cause the FPGA to malfunction. Because of this, and because the file originates from the [PiStorm project](https://github.com/captain-amygdala/pistorm) with its own licensing, it must be obtained separately.
+
+**Before building**, place the correct bitstream for your board revision at:
 
 ```
 fpga/bitstream.bin
 ```
 
-The image will build without it. You can also copy it to the SD card afterwards at `/usr/local/share/alix/bitstream.bin`.
+The build system will automatically install it to `/usr/local/share/alix/bitstream.bin` in the image. If the file is not present, the image still builds — but the FPGA loader service will fail at boot until the bitstream is provided.
+
+**After flashing**, you can also copy it manually to the SD card:
+
+```bash
+sudo cp bitstream.bin /usr/local/share/alix/bitstream.bin
+```
+
+To obtain the bitstream:
+
+```bash
+git clone --depth 1 --branch pistorm32-lite \
+  https://github.com/captain-amygdala/pistorm.git /tmp/pistorm-repo
+cp /tmp/pistorm-repo/bitstream.bin fpga/bitstream.bin
+rm -rf /tmp/pistorm-repo
+```
+
+The file is `bitstream.bin` (approx. 640 KB) in the repository root of the `pistorm32-lite` branch. It is loaded via SPI at every boot — the FPGA is not permanently flashed. You can also copy it from an existing Emu68 SD card.
 
 ## Requirements
 
