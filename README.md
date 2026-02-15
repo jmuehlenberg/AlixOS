@@ -166,7 +166,16 @@ cp /tmp/pistorm-repo/bitstream.bin fpga/bitstream.bin
 rm -rf /tmp/pistorm-repo
 ```
 
-The file is `bitstream.bin` (approx. 640 KB) in the repository root of the `pistorm32-lite` branch. It is loaded via SPI at every boot — the FPGA is not permanently flashed. You can also copy it from an existing Emu68 SD card.
+The file is `bitstream.bin` (approx. 640 KB) in the repository root of the `pistorm32-lite` branch. It is loaded via SPI at every boot — the FPGA is not permanently flashed.
+
+Alternatively, if you already have an Emu68 setup, the same `bitstream.bin` is on your Emu68 SD card in the root of the boot partition. Simply mount the card and copy it:
+
+```bash
+# Mount Emu68 SD card (adjust device as needed)
+sudo mount /dev/sdX1 /mnt
+cp /mnt/bitstream.bin fpga/bitstream.bin
+sudo umount /mnt
+```
 
 ## Requirements
 
